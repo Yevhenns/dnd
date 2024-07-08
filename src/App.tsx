@@ -1,35 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Link } from "react-router-dom";
+import "./App.css";
+// import { v4 as uuidv4 } from "uuid";
+import { useEffect, useState } from "react";
+
+export type DataItem = {
+    id: string;
+    title: string;
+    pinned: boolean;
+};
+
+const data = [
+    { id: "1", title: "Dashboard", pinned: true },
+    { id: "2", title: "Banking", pinned: true },
+    { id: "3", title: "Telefonie", pinned: true },
+    { id: "4", title: "Help", pinned: false },
+    { id: "5", title: "Warenbestand", pinned: false },
+    { id: "6", title: "Auswahllisten", pinned: false },
+];
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [pinnedItems, setPinnedItems] = useState<DataItem[]>([]);
+    // const [unpinnedItems, setUnpinnedItems] = useState<DataItem[]>([]);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    useEffect(() => {
+        const array = data.filter((item) => item.pinned === true);
+        setPinnedItems(array);
+    }, []);
+
+    // useEffect(() => {
+    //     const array = data.filter((item) => item.pinned === false);
+    //     setUnpinnedItems(array);
+    // }, []);
+
+    return (
+        <div>
+            <div>
+                <span>pinned</span>
+                {pinnedItems.map((item) => {
+                    return (
+                        <Link to={"/"} key={item.id}>
+                            <span>{item.title}</span>
+                        </Link>
+                    );
+                })}
+            </div>
+            {/* <div>
+                <span>unpinned</span>
+                {unpinnedItems.map((item) => {
+                    return (
+                        <Link to={"/"} key={item.id}>
+                            <span>{item.title}</span>
+                        </Link>
+                    );
+                })}
+            </div> */}
+        </div>
+    );
 }
 
-export default App
+export default App;
