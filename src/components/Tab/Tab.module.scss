@@ -1,0 +1,22 @@
+.wrapper {
+  display: flex;
+
+  &.pinned {
+    background-color: tomato;
+    justify-content: flex-start;
+  }
+
+  &.unpinned {
+    background-color: green;
+    justify-content: flex-start;
+  }
+
+  .item {
+    border: 1px solid tomato;
+    padding: 0 20px;
+
+    a {
+      color: black;
+    }
+  }
+}
