@@ -1,4 +1,4 @@
-import "./App.css";
+import css from "./App.module.css";
 import { useEffect, useState } from "react";
 import { data } from './data'
 import { DropResult } from "react-beautiful-dnd";
@@ -8,6 +8,7 @@ export type DataItem = {
     id: string;
     title: string;
     pinned: boolean;
+    route: string
 };
 
 function App() {
@@ -47,9 +48,9 @@ function App() {
     }
 
     return (
-        <div>
-            <Tab heading="pinned" data={pinnedItems} handleOnDragEnd={handleOnDragEnd} />
-            <Tab heading="unpinned" data={unpinnedItems} handleOnDragEnd={handleOnDragEnd1} />
+        <div className={css.layout} >
+            <Tab heading="pinned" droppableId="pinned" data={pinnedItems} handleOnDragEnd={handleOnDragEnd} />
+            <Tab heading="unpinned" droppableId="unpinned" data={unpinnedItems} handleOnDragEnd={handleOnDragEnd1} />
 
         </div>
     );
