@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import "./App.css";
 // import { v4 as uuidv4 } from "uuid";
 import { useEffect, useState } from "react";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 export type DataItem = {
     id: string;
@@ -36,13 +37,24 @@ function App() {
         <div>
             <div>
                 <span>pinned</span>
-                {pinnedItems.map((item) => {
-                    return (
-                        <Link to={"/"} key={item.id}>
-                            <span>{item.title}</span>
-                        </Link>
-                    );
-                })}
+                <DragDropContext>
+                    <Droppable droppableId={"droppable"} type='group'>
+                        {(provided) => (<div className="pinnedItems" {...provided.droppableProps} ref={provided.innerRef}>
+                            {pinnedItems.map((item, index) => {
+                                return (
+                                    <Draggable key={item.id} draggableId={item.id} index={index}>
+                                        {(provided) => (<div {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                                            {/* <Link to={"/"} > */}
+                                            <span>{item.title}</span>
+                                            {/* </Link> */}
+                                        </div>)}
+
+                                    </Draggable>
+                                );
+                            })}
+                        </div>)}
+                    </Droppable>
+                </DragDropContext>
             </div>
             {/* <div>
                 <span>unpinned</span>
